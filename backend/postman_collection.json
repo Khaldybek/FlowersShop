@@ -1,0 +1,310 @@
+{
+  "info": {
+    "name": "Flower Shop API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bouquets",
+      "item": [
+        {
+          "name": "Get All Bouquets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/bouquets?page=1&limit=10&category=1&search=розы&sort=price&order=asc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bouquets"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "category",
+                  "value": "1"
+                },
+                {
+                  "key": "search",
+                  "value": "розы"
+                },
+                {
+                  "key": "sort",
+                  "value": "price"
+                },
+                {
+                  "key": "order",
+                  "value": "asc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Bouquet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Новый букет\",\n    \"description\": \"Описание нового букета\",\n    \"price\": 3000,\n    \"discount_percentage\": 10,\n    \"category_id\": 1,\n    \"images\": [\"/uploads/bouquets/new-bouquet.jpg\"],\n    \"is_available\": true,\n    \"is_featured\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bouquets",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bouquets"]
+            }
+          }
+        },
+        {
+          "name": "Update Bouquet",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Обновленный букет\",\n    \"price\": 3500,\n    \"discount_percentage\": 15\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/bouquets/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bouquets", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Bouquet",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/bouquets/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "bouquets", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "categories"]
+            }
+          }
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Новая категория\",\n    \"description\": \"Описание новой категории\",\n    \"image_url\": \"/uploads/categories/new-category.jpg\",\n    \"sort_order\": 5,\n    \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "categories"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"customer_name\": \"Иван Иванов\",\n    \"phone\": \"+7 (999) 123-45-67\",\n    \"email\": \"ivan@example.com\",\n    \"delivery_address\": \"ул. Примерная, д. 1\",\n    \"delivery_date\": \"2024-03-20\",\n    \"delivery_time\": \"14:00\",\n    \"items\": [\n        {\n            \"bouquet_id\": 1,\n            \"quantity\": 2\n        },\n        {\n            \"bouquet_id\": 2,\n            \"quantity\": 1\n        }\n    ],\n    \"total_amount\": 8500,\n    \"payment_method\": \"card\",\n    \"notes\": \"Доставить к 14:00\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/orders",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"]
+            }
+          }
+        },
+        {
+          "name": "Get All Orders (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/orders?page=1&limit=10&status=pending",
+              "host": ["{{base_url}}"],
+              "path": ["api", "orders"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "pending"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "File Upload",
+      "item": [
+        {
+          "name": "Upload Bouquet Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/your/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/upload/bouquets",
+              "host": ["{{base_url}}"],
+              "path": ["api", "upload", "bouquets"]
+            }
+          }
+        },
+        {
+          "name": "Upload Category Image",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/your/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/upload/categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "upload", "categories"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001"
+    },
+    {
+      "key": "token",
+      "value": "your_jwt_token_here"
+    }
+  ]
+} 
